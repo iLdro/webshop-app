@@ -1,15 +1,11 @@
 import React from 'react';
+import ProductCard from '../component/product_card';
 
-interface Props {
-  name: string;
-  age: number;
-}
-
-const Home: React.FC<Props> = ({ name, age }) => {
+const Home = () => {
   return (
     <div>
-      <h1>Hello, {name}!</h1>
-      <p>You are {age} years old.</p>
+      <h1>Home</h1>
+      <ProductCard id={0} name="test" price={20} description="test" image={''} quantity={0} category={''} />
     </div>
   );
 };
