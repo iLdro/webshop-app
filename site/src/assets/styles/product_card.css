@@ -1,0 +1,41 @@
+#Pcard{
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    text-align: left;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+#Pcard:hover{
+    box-shadow: 0 0 10px 5px #888888;
+}
+
+#Pcard h1{
+    font-size: 1.5em;
+    text-align: center;
+}
+
+#Pcard p{
+    font-size: 1em;
+}
+
+#Pcard button{
+    background-color: #646cff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#Pcard button:hover{
+    background-color: #7d83fa;
+}

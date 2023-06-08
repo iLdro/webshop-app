@@ -1,0 +1,36 @@
+#Cart {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 10px;
+    height: auto;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    text-align: left;
+}
+
+#CartHeader {
+    font-size: 1.5em;
+    text-align: center;
+    background-color: greenyellow;
+}
+
+#ProductInCart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    text-align: left;
+}
+
+#CartFoort {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    text-align: left;
+    background-color: greenyellow;
+}
