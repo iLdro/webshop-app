@@ -1,30 +1,27 @@
 [
     {
-      "id": 1,
-      "name": "product1",
-      "price": 100,
-      "description": "product1",
-      "image": "product1",
-      "quantity": 1,
-      "category": "product1"
+      "name": "Tulipe",
+      "price": 4,
+      "description": "De magnifiques tulipes de saison",
+      "image": "https://d31ucaydsf5avx.cloudfront.net/11194-large_default/tulipe-artificielle-blanche.jpg",
+      "quantity": 8,
+      "category": "fleurs"
     },
     {
-      "id": 2,
-      "name": "product2",
-      "price": 200,
-      "description": "product2",
-      "image": "product2",
-      "quantity": 2,
-      "category": "product2"
+      "name": "Rose",
+      "price": 20,
+      "description": "De magnifiques roses de saison",
+      "image": "https://bergamotte.imgix.net/e9pp3g4yrwpb1fm1m5cbarreb4b4?ixlib=rails-4.2.0&auto=format%2Ccompress&fit=crop&q=65&ar=1%3A1",
+      "quantity": 12,
+      "category": "fleurs"
     },
     {
-      "id": 3,
-      "name": "product3",
-      "price": 300,
-      "description": "product3",
-      "image": "product3",
+      "name": "Marguerite",
+      "price": 9,
+      "description": "Des marguerties qui feront plaisir à votre superbe maman",
+      "image": "https://t3t8k6v8.rocketcdn.me/wp-content/uploads/2019/04/Marguerite.jpg",
       "quantity": 3,
-      "category": "product3"
+      "category": "fleurs"
     }
   ]
   
