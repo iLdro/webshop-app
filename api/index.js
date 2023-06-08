@@ -27,7 +27,6 @@ Product.find({})
 
         app.get('/', (req, res) => res.send('API Running'));
         app.get('/api/products', (req, res) => res.json(productsJSON));
-
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
     })
     .catch(err => {
