@@ -5,7 +5,8 @@
       "description": "De magnifiques tulipes de saison",
       "image": "https://d31ucaydsf5avx.cloudfront.net/11194-large_default/tulipe-artificielle-blanche.jpg",
       "quantity": 8,
-      "category": "fleurs"
+      "category": "fleurs",
+      "inCard" : false
     },
     {
       "name": "Rose",
@@ -13,7 +14,8 @@
       "description": "De magnifiques roses de saison",
       "image": "https://bergamotte.imgix.net/e9pp3g4yrwpb1fm1m5cbarreb4b4?ixlib=rails-4.2.0&auto=format%2Ccompress&fit=crop&q=65&ar=1%3A1",
       "quantity": 12,
-      "category": "fleurs"
+      "category": "fleurs",
+      "inCard" : false
     },
     {
       "name": "Marguerite",
@@ -21,7 +23,8 @@
       "description": "Des marguerties qui feront plaisir à votre superbe maman",
       "image": "https://t3t8k6v8.rocketcdn.me/wp-content/uploads/2019/04/Marguerite.jpg",
       "quantity": 3,
-      "category": "fleurs"
+      "category": "fleurs",
+      "inCard" : false
     }
   ]
   

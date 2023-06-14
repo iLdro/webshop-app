@@ -20,15 +20,63 @@ const PORT = process.env.PORT || 5000;
 
 const Product = require('./schema/produit');
 
-Product.find({})
-    .then(products => {
-        console.log('Retrieved products:', products);
-        var productsJSON = JSON.stringify(products);
+const sendProducts = (req, res, next) => {
+    Product.find({})
+        .then(products => {
+            console.log('Retrieved products:', products);
+            res.locals.products = products;
+            next();
+        })
+        .catch(err => {
+            console.error('Error retrieving products:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
 
-        app.get('/', (req, res) => res.send('API Running'));
-        app.get('/api/products', (req, res) => res.json(productsJSON));
-        app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+const SendProductInCart = (req, res, next) => {
+    Product.find({inCard: true})
+        .then(products => {
+            console.log('Retrieved products:', products);
+            res.locals.products = products;
+            next();
+        })
+        .catch(err => {
+            console.error('Error retrieving products:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
+
+const updateInCard = (req, res, next) => {
+    const { id } = req.params.id;
+    Product.findOneAndUpdate({ _id: id }, { $set: { inCard: {$not :'inCard'} } })
+    .then(product => {
+        console.log('Updated product:', product);
+        res.locals.product = product;
+        next();
     })
     .catch(err => {
-        console.error('Error retrieving products:', err);
+        console.error('Error updating product:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
     });
+};
+
+
+
+
+app.get('/api/products', sendProducts, (req, res) => {
+    const products = res.locals.products;
+    res.json(products);
+});
+
+app.get('/api/productsInCard', SendProductInCart, (req, res) => {
+    const products = res.locals.products;
+    res.json(products);
+});
+
+app.post('/api/productsUpdateCard/:id', updateInCard, (req, res) => {
+    const product = res.locals.product;
+    res.json(product);
+});
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

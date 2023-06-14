@@ -10,7 +10,7 @@ const ProductCard: React.FC<Product> = ({ name, price, description, image, quant
             <h1>{name}</h1> 
             <p>{description}</p>
             <p>{price}€</p>
-            <button>Add to cart</button>
+            <button >Add to cart</button>
         </div>
     );
     }
