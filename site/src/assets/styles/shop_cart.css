@@ -16,6 +16,8 @@
     font-size: 1.5em;
     text-align: center;
     background-color: greenyellow;
+    border:solid black 1px;
+    margin-bottom: 2px;
 }
 
 #ProductInCart {
@@ -26,11 +28,13 @@
     text-align: left;
 }
 
-#CartFoort {
+#CartFoot {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: left;
     text-align: left;
     background-color: greenyellow;
+    border: solid black 1px;
+    margin-top :2px;
 }

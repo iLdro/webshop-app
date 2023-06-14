@@ -24,7 +24,11 @@ const produitSchema = new mongoose.Schema({
     category : {
         type: String,
         required: true
-    }
+    },
+    inCardQuantity : {
+        type: Number,
+        required: true
+    },
 });
 
 const Product = mongoose.model('Product', produitSchema);
