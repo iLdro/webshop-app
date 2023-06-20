@@ -3,11 +3,33 @@ import ProductCard from '../component/product_card';
 import Cart from '../component/shop_cart';
 import Grid from '../component/grid'
 import { Product } from '../type/product';
+import axios from 'axios';
 
 const Home = () => {
 
   const [products, setProducts] = React.useState([]);
   const [cartProducts, setCartProducts] = React.useState([]);
+  const [inCardQuantityState, setInCardQuantityState] = React.useState(inCardQuantity)
+
+const AddProduct  = (props : Product) => {
+  console.log("inCardQuantity" + props.inCardQuantity)
+  axios.post('http://localhost:5000/api/productsUpdateCard/', {
+      _id : props._id,
+      name: props.name,
+      price: props.price,
+      description: props.description,
+      image: props.image,
+      quantity: props.quantity,
+      category: props.category,
+      inCardQuantity : props.inCardQuantity 
+  }).then(() => {
+      setInCardQuantityState(inCardQuantityState + 1)
+      console.log("nouvelle quantité ajoutée" + props.inCardQuantity)
+      console.log("success")  
+  }
+  )
+}
+  
 
   const getPingFromBackend = async () => {
     try{
@@ -20,7 +42,9 @@ const Home = () => {
     }
   }
 
-
+  const RemoveProduct  = () => {
+    console.log("remove product" )
+  }
 
 
   React.useEffect(() => {
@@ -56,7 +80,7 @@ const Home = () => {
       <h1>Home</h1>
       <div id="body" >
         <div id="productGrid">
-          <Grid products={products} />
+          <Grid products={products} addToCart={AddProduct}/>
         </div>
       
         <div id="cart">
@@ -65,6 +89,7 @@ const Home = () => {
       </div>
       
     </div>
+    
   );
 };
 

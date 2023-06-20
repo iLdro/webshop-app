@@ -4,41 +4,25 @@ import '../assets/styles/product_card.css'
 import axios from 'axios';
 import { useState } from "react";
 
+interface ProductProps {
+    props: Product;
+    addToCart(props : Product): void;
+}
 
-const ProductCard: React.FC<Product> = ({_id , name, price, description, image, quantity, category, inCardQuantity }) => {
+const ProductCard: React.FC<ProductProps> = ({props, addToCart }) => {
 
-    const [inCardQuantityState, setInCardQuantityState] = useState(inCardQuantity)
-
-
-    const addToCart  = () => {
-        console.log("inCardQuantity" + inCardQuantity)
-        axios.post('http://localhost:5000/api/productsUpdateCard/', {
-            _id : _id,
-            name: name,
-            price: price,
-            description: description,
-            image: image,
-            quantity: quantity,
-            category: category,
-            inCardQuantity : inCardQuantity 
-        }).then(() => {
-            setInCardQuantityState(inCardQuantityState + 1)
-            console.log("nouvelle quantité ajoutée" + inCardQuantity)
-            console.log("success")
-        }
-        )
+    const AddProduct  = () => {
+        console.log("inCardQuantity" + props.inCardQuantity)
+        addToCart(props);
     }
-
-
-    
     
     return (
         <div id="Pcard">
             
-            <h1>{name}</h1> 
-            <p>{description}</p>
-            <p>{price}€</p>
-            <button onClick={addToCart}>Add to cart</button>
+            <h1>{props.name}</h1> 
+            <p>{props.description}</p>
+            <p>{props.price}€</p>
+            <button onClick={AddProduct}>Add to cart</button>
             
         </div>
     );
