@@ -34,6 +34,31 @@ const Home = () => {
     });
   };
   
+  const removeFromCart= (props: Product) =>{
+    console.log("inCardQuantity" + props.inCardQuantity);
+    axios.post('http://localhost:5000/api/productsUpdateCard/', {
+      _id: props._id,
+      name: props.name,
+      price: props.price,
+      description: props.description,
+      image: props.image,
+      quantity: props.quantity,
+      category: props.category,
+      inCardQuantity: props.inCardQuantity - 1
+    })
+    .then(() => {
+      if (props.inCardQuantity > 0){
+        setInCardQuantityState(inCardQuantityState - 1); 
+      }
+      console.log("nouvelle quantité ajoutée: " + props.inCardQuantity);
+      console.log("success");
+      props.inCardQuantity = props.inCardQuantity - 1;
+      fetchCartProducts();
+    })
+    .catch((error) => {
+      console.error('Error adding product:', error);
+    });
+  }
   
   const fetchCartProducts = async () => {
     try {
@@ -56,7 +81,7 @@ const Home = () => {
         console.error('Error retrieving products:', error);
       }
     })();
-    fetchCartProducts(); // Fetch cart products initially
+    fetchCartProducts(); 
   }, []);
 
   return (
@@ -70,7 +95,10 @@ const Home = () => {
           />
         </div>
         <div id="cart">
-          <Cart products={cartProducts} />
+          <Cart 
+            products={cartProducts} 
+            removeFromCart={removeFromCart} 
+          />
         </div>
       </div>
     </div>

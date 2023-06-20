@@ -1,30 +1,28 @@
 import React from "react";
 import { Product } from "../type/product"
-import axios from 'axios';
 
 
 
+interface ProductProps{
+    product: Product;
+    removeFromCart(props : Product): void;
+}
 
-const itemInCart: React.FC<Product> = ({_id , name, price, description, image, quantity, category, inCardQuantity }) => {
-    
-    const removeFromCart = () => {
-        console.log("remove from cart")
-        axios.delete(`http://localhost:3000/cart/${_id}`)
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-        }
+
+const itemInCart: React.FC<ProductProps> = ({product, removeFromCart }) => {
+    const { name, inCardQuantity } = product;
+
+    const removeProduct = () => {
+        removeFromCart(product);
+        
+    }   
 
     return (
         <div id="ProductInCart">
-                <h2>{name}</h2>
-                <p>quantity : {inCardQuantity}</p>
-                <button onClick={removeFromCart}>Remove</button>
-            </div>
+            <h2>{name}</h2>
+            <p>quantity: {inCardQuantity}</p>
+            <button onClick={removeProduct}>Remove</button>
+        </div>
     )
 }
 

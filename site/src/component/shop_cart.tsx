@@ -4,7 +4,13 @@ import ItemInCart from '../component/itemInCart.tsx';
 import '../assets/styles/shop_cart.css';
 import Axios from 'axios';
 
-const Cart = ({ products }: { products: Product[] | string }) => {
+interface CartProps {
+    products: Product[] | string;
+    removeFromCart(props: Product): void;
+}
+
+const Cart = ({ products, removeFromCart }: CartProps) => {
+
     const [cartArray, setCartArray] = useState<Product[]>([]);
 
     useEffect(() => {
@@ -35,14 +41,9 @@ const Cart = ({ products }: { products: Product[] | string }) => {
             <div id="itemList">
                 {cartArray.map((product: Product) => (
                     <ItemInCart
-                        _id={product._id}
-                        name={product.name}
-                        price={product.price}
-                        description={product.description}
-                        image={product.image}
-                        quantity={product.quantity}
-                        category={product.category}
-                        inCardQuantity={product.inCardQuantity}
+                        key={product._id}
+                        product={product}
+                        removeFromCart={removeFromCart}
                     />
                 ))}
             </div>
