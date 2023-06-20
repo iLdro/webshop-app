@@ -38,7 +38,7 @@ const sendProducts = (req, res, next) => {
 
 
 const SendProductInCart = (req, res, next) => {
-    Product.find({inCardQuantity: {$gt: 0}})
+    Product.find({ inCardQuantity: { $gt: 0 } })
         .then(products => {
             console.log('Retrieved products:', products);
             res.locals.products = products;
@@ -51,18 +51,19 @@ const SendProductInCart = (req, res, next) => {
 };
 
 const updateInCard = (req, res, next) => {
-    Product.findOneAndUpdate({ _id: req.body._id }, { inCardQuantity: req.body.inCardQuantity + 1 })
-        .then(products => {
-            console.log('Retrieved products:', products);
-            res.locals.products = products;
+    Product.findByIdAndUpdate(req.body._id, { inCardQuantity: req.body.inCardQuantity })
+        .then(product => {
+            console.log('Updated product:', product);
+            res.locals.product = product;
             next();
         })
         .catch(err => {
-            console.error('Error retrieving products:', err);
+            console.error('Error updating product:', err);
             res.status(500).json({ error: 'Internal Server Error' });
         });
-}
-    
+};
+
+
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 
@@ -74,14 +75,14 @@ app.get('/api/products', sendProducts, (req, res) => {
 app.get('/api/productsInCard', SendProductInCart, (req, res) => {
     const products = res.locals.products;
     res.json(products);
-}); 
+});
 
-app.post('/api/productsUpdateCard/',updateInCard, (req, res) => {
+app.post('/api/productsUpdateCard/', updateInCard, (req, res) => {
     const products = res.locals.products;
     res.json(products);
-    app.put('/api/sendUpdate/',SendProductInCart, (req, res) => {
+    app.put('/api/sendUpdate/', SendProductInCart, (req, res) => {
         const products = res.locals.products;
         res.json(products);
-    });    
+    });
 });
 

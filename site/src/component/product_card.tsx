@@ -2,28 +2,25 @@ import React from "react";
 import { Product } from "../type/product.ts";
 import '../assets/styles/product_card.css'
 import axios from 'axios';
-import { useState } from "react";
 
 interface ProductProps {
-    props: Product;
-    addToCart(props : Product): void;
+    product: Product;
+    addToCart(product: Product): void;
 }
 
-const ProductCard: React.FC<ProductProps> = ({props, addToCart }) => {
+const ProductCard: React.FC<ProductProps> = ({ product, addToCart }) => {
+    const { name, description, price } = product;
 
-    const AddProduct  = () => {
-        console.log("inCardQuantity" + props.inCardQuantity)
-        addToCart(props);
+    const handleAddToCart = () => {
+        addToCart(product);
     }
     
     return (
         <div id="Pcard">
-            
-            <h1>{props.name}</h1> 
-            <p>{props.description}</p>
-            <p>{props.price}€</p>
-            <button onClick={AddProduct}>Add to cart</button>
-            
+            <h1>{name}</h1> 
+            <p>{description}</p>
+            <p>{price}€</p>
+            <button onClick={handleAddToCart}>Add to cart</button>
         </div>
     );
 }

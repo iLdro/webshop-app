@@ -1,34 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Product } from "../type/product";
 import ItemInCart from '../component/itemInCart.tsx';
 import '../assets/styles/shop_cart.css';
 import Axios from 'axios';
 
-
 const Cart = ({ products }: { products: Product[] | string }) => {
+    const [cartArray, setCartArray] = useState<Product[]>([]);
 
-    let CartArray : Product[] = [];
-    Axios.get('http://localhost:5000/api/productsInCard/').then((response) => {
-        console.log(response.data);
-        CartArray = response.data;
-    })
-    
+    useEffect(() => {
+        const fetchCartProducts = async () => {
+            try {
+                const response = await Axios.get('http://localhost:5000/api/productsInCard/');
+                const data = response.data;
+                if (typeof products === 'string') {
+                    try {
+                        setCartArray(JSON.parse(products));
+                    } catch (error) {
+                        console.error('Error parsing products:', error);
+                    }
+                } else {
+                    setCartArray(products);
+                }
+            } catch (error) {
+                console.error('Error retrieving cart products:', error);
+            }
+        };
 
-    if (typeof products === 'string') {
-        try {
-            CartArray = JSON.parse(products);
-        } catch (error) {
-            console.error('Error parsing products:', error);
-        }
-  } else {
-    CartArray = products;
-    }
+        fetchCartProducts();
+    }, [products]);
 
     return (
         <div id="Cart">
             <div id="CartHeader">Cart</div>
             <div id="itemList">
-                {CartArray.map((product: Product) => (
+                {cartArray.map((product: Product) => (
                     <ItemInCart
                         _id={product._id}
                         name={product.name}
@@ -40,12 +45,10 @@ const Cart = ({ products }: { products: Product[] | string }) => {
                         inCardQuantity={product.inCardQuantity}
                     />
                 ))}
-                
             </div>
-            
             <div id="CartFoot">
                 Total : €
-                nombre de produit : 
+                nombre de produit :
             </div>
         </div> 
     );   

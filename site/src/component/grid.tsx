@@ -6,15 +6,13 @@ import axios from 'axios';
 
 interface GridProps {
   products: Product[] | string;
-  addToCart(props : Product): void;
+  addToCart(props: Product): void;
 }
 
 const Grid = ({ products, addToCart }: GridProps) => {
   console.log(typeof products);
   console.log("blabla" + products);
 
-
-  
   let productsArray: Product[] = [];
 
   if (typeof products === 'string') {
@@ -27,19 +25,18 @@ const Grid = ({ products, addToCart }: GridProps) => {
     productsArray = products;
   }
 
- 
-
   return (
-      <>
-        <div id="mainGrid">
-            {productsArray.map((product: Product) => (
-              console.log(product.inCardQuantity ),
-            <ProductCard
-                props = {product}
-                addToCart = {addToCart}
-            />
-            ))}
-        </div>
+    <>
+      <div id="mainGrid">
+        {productsArray.map((product: Product) => (
+          console.log("in card quantity", product.inCardQuantity),
+          <ProductCard
+            key={product._id}
+            product={product}
+            addToCart={addToCart}
+          />
+        ))}
+      </div>
     </>
   );
 }
