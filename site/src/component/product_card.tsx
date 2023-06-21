@@ -4,19 +4,20 @@ import '../assets/styles/product_card.css'
 
 interface ProductProps {
     product: Product;
-    addToCart(product: Product): void;
+    addToCart(product: Product ,  quantity : number): void;
 }
 
 const ProductCard: React.FC<ProductProps> = ({ product, addToCart }) => {
-    const { name, description, price } = product;
+    const { name, image, description, price } = product;
 
     const handleAddToCart = () => {
-        addToCart(product);
+        addToCart(product,1);
     }
     
     return (
         <div id="Pcard">
             <h1>{name}</h1> 
+            <img src={image} alt="image" />
             <p>{description}</p>
             <p>{price}€</p>
             <button onClick={handleAddToCart}>Add to cart</button>

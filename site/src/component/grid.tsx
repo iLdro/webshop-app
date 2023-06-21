@@ -4,7 +4,7 @@ import '../assets/styles/grid.css';
 
 interface GridProps {
   products: Product[] | string;
-  addToCart(props: Product): void;
+  addToCart(props: Product , quantity : number): void;
 }
 
 const Grid = ({ products, addToCart }: GridProps) => {

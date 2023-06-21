@@ -6,7 +6,7 @@ import Axios from 'axios';
 
 interface CartProps {
     products: Product[] | string;
-    removeFromCart(props: Product): void;
+    removeFromCart(props: Product, quantity : number): void;
 }
 
 const Cart = ({ products, removeFromCart }: CartProps) => {

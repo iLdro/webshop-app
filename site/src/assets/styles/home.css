@@ -1,6 +1,47 @@
 #container {
     display:flex;
     flex-direction: row;
-    justify-content: space-around;        
+    justify-content: space-around;
+    border-bottom: solid grey 1px; 
+    padding-bottom: 20px;      
 }
 
+#title{
+    border: solid rgb(25, 25, 169) 1px;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    
+}
+
+
+#AddForm{
+    display:flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 5px;
+}
+
+input{
+    margin: 5px;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-bottom: solid 2px  rgb(25, 25, 169);
+    color: white;
+    width:  100px;
+    background-color: transparent;
+    color: black;
+}
+
+
+
+#buttonForm {
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: solid 0px;
+    border-bottom: solid 1px;
+    background-color: rgb(25, 25, 169);
+    color: white;
+}

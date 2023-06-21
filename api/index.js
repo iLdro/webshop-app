@@ -51,6 +51,7 @@ const SendProductInCart = (req, res, next) => {
 };
 
 const updateInCard = (req, res, next) => {
+    console.log('inCardQuantity', req.body)
     Product.findByIdAndUpdate(req.body._id, { inCardQuantity: req.body.inCardQuantity })
         .then(product => {
             console.log('Updated product:', product);
@@ -59,7 +60,7 @@ const updateInCard = (req, res, next) => {
         })
         .catch(err => {
             console.error('Error updating product:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
+            res.status(500).json({ error: 'Internal Server Error' }); 
         });
 };
 
@@ -85,4 +86,27 @@ app.post('/api/productsUpdateCard/', updateInCard, (req, res) => {
         res.json(products);
     });
 });
+
+app.post('/api/createProduct', (req, res) => {
+    console.log('Creating product:', req.body);
+    const product = new Product({
+        name: req.body.name,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        inCardQuantity: req.body.inCardQuantity,
+        description: req.body.description,
+        image: req.body.image,
+        category: req.body.category
+    });
+    product.save()
+        .then(product => {
+            console.log('Created product:', product);
+            res.json(product);
+        })
+        .catch(err => {
+            console.error('Error creating product:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+}
+);
 

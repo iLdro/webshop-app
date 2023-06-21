@@ -6,7 +6,7 @@ import '../assets/styles/cart.css'
 
 interface ProductProps{
     product: Product;
-    removeFromCart(props : Product): void;
+    removeFromCart(props : Product , quantity : number): void;
 }
 
 
@@ -14,7 +14,7 @@ const itemInCart: React.FC<ProductProps> = ({product, removeFromCart }) => {
     const { name, inCardQuantity } = product;
 
     const removeProduct = () => {
-        removeFromCart(product);
+        removeFromCart(product, -1);
         
     }   
 
@@ -22,7 +22,7 @@ const itemInCart: React.FC<ProductProps> = ({product, removeFromCart }) => {
         <div id="ProductInCart">
             <h2>{name}</h2>
             <p>quantity: {inCardQuantity}</p>
-            <button onClick={removeProduct}>Remove</button>
+            <button id="removeButton" onClick={removeProduct}>Remove</button>
         </div>
     )
 }

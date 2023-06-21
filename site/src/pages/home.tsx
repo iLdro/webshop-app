@@ -8,51 +8,41 @@ import '../assets/styles/home.css';
 const Home = () => {
   const [products, setProducts] = React.useState([]);
   const [cartProducts, setCartProducts] = React.useState([]);
-  const [inCardQuantityState, setInCardQuantityState] = React.useState(0);
+  const [formdata , setFormData] = React.useState({} as Product);
 
-  const AddProduct = (props: Product) => {
-    axios.post('http://localhost:5000/api/productsUpdateCard/', {
-      _id: props._id,
-      name: props.name,
-      price: props.price,
-      description: props.description,
-      image: props.image,
-      quantity: props.quantity,
-      category: props.category,
-      inCardQuantity: props.inCardQuantity + 1
-    })
-    .then(() => {
-      setInCardQuantityState(inCardQuantityState + 1);
-      props.inCardQuantity = props.inCardQuantity + 1;
-      fetchCartProducts();
-    })
-    .catch((error) => {
-      console.error('Error adding product:', error);
+
+  
+  const upDateProduct = (product: Product, quantity: number) => {
+    const  updatedProducts = products.map((p : Product) : Product => {
+      if (p._id === product._id) {
+        return { ...p, inCardQuantity: p.inCardQuantity + quantity };
+      }
+      return p;
     });
+  
+    axios
+      .post('http://localhost:5000/api/productsUpdateCard/', {
+        _id: product._id,
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        image: product.image,
+        quantity: product.quantity,
+        category: product.category,
+        inCardQuantity: product.inCardQuantity + quantity,
+      })
+      .then(() => {
+        console.log('Product added');
+        setProducts(updatedProducts);
+        fetchCartProducts();
+      })
+      .catch((error) => {
+        console.error('Error adding product:', error);
+      });
   };
   
-  const removeFromCart= (props: Product) =>{
-    axios.post('http://localhost:5000/api/productsUpdateCard/', {
-      _id: props._id,
-      name: props.name,
-      price: props.price,
-      description: props.description,
-      image: props.image,
-      quantity: props.quantity,
-      category: props.category,
-      inCardQuantity: props.inCardQuantity - 1
-    })
-    .then(() => {
-      if (props.inCardQuantity > 0){
-        setInCardQuantityState(inCardQuantityState - 1); 
-      }
-      props.inCardQuantity = props.inCardQuantity - 1;
-      fetchCartProducts();
-    })
-    .catch((error) => {
-      console.error('Error adding product:', error);
-    });
-  }
+  
+
   
   const fetchCartProducts = async () => {
     try {
@@ -77,24 +67,69 @@ const Home = () => {
     })();
     fetchCartProducts(); 
   }, []);
+  
+  
+  const addProduct = async () => {
+    axios.post('http://localhost:5000/api/createProduct', {
+      name: formdata.name,  
+      price: formdata.price,
+      description: formdata.description,
+      image: formdata.image,
+      quantity: formdata.quantity,
+      category: formdata.category,
+      inCardQuantity: 0      
+    })
+    .then(() => {
+      console.log('Product added');
+      fetchCartProducts();
+    }
+    )
+    .catch((error) => {
+      console.error('Error adding product:', error);
+    }
+    );
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formdata,
+      [event.currentTarget.name]: event.currentTarget.value,
+    });
+  };
+
 
   return (
     <div>
-      <h1>Home</h1>
+      <h1 id="title">Home</h1>
       <div id="container">
         <div id="productGrid">
           <Grid
             products={products}
-            addToCart={AddProduct}
+            addToCart={upDateProduct}
           />
         </div>
         <div id="cart">
           <Cart 
+  
             products={cartProducts} 
-            removeFromCart={removeFromCart} 
+            removeFromCart={upDateProduct} 
           />
         </div>
       </div>
+      <div id="AddForm">
+        <h2>Ajouter un produit</h2>
+        <form onSubmit={() => {addProduct()}}>
+        
+          <input type="text" name="name" placeholder="Nom"  value={formdata.name} onChange={handleChange}/>
+          <input type="number" name="price" placeholder="Prix" value={formdata.price} onChange={handleChange}/>
+          <input type="text" name="description" placeholder="Description" value={formdata.description} onChange={handleChange} />
+          <input type="text" name="image" placeholder="Image" value={formdata.image} onChange={handleChange}/>
+          <input type="number" name="quantity" placeholder="Quantité" value={formdata.quantity} onChange={handleChange}/>
+          <input type="text" name="category" placeholder="Categorie"value={formdata.category} onChange={handleChange} />
+          <button id="buttonForm" >Envoyer</button>
+        </form>
+      </div>
+
     </div>
   );
 };
