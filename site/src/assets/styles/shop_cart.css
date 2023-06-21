@@ -15,7 +15,7 @@
 #CartHeader {
     font-size: 1.5em;
     text-align: center;
-    background-color: greenyellow;
+    background-color: rgb(25, 25, 169);
     border:solid black 1px;
     margin-bottom: 2px;
 }
@@ -34,7 +34,7 @@
     justify-content: space-between;
     align-items: left;
     text-align: left;
-    background-color: greenyellow;
+    background-color: rgb(25, 25, 169);
     border: solid black 1px;
     margin-top :2px;
 }

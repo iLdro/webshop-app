@@ -1,9 +1,9 @@
 import React from 'react';
-import ProductCard from '../component/product_card';
 import Cart from '../component/shop_cart';
 import Grid from '../component/grid';
 import { Product } from '../type/product';
 import axios from 'axios';
+import '../assets/styles/home.css';
 
 const Home = () => {
   const [products, setProducts] = React.useState([]);
@@ -11,7 +11,6 @@ const Home = () => {
   const [inCardQuantityState, setInCardQuantityState] = React.useState(0);
 
   const AddProduct = (props: Product) => {
-    console.log("inCardQuantity: " + props.inCardQuantity);
     axios.post('http://localhost:5000/api/productsUpdateCard/', {
       _id: props._id,
       name: props.name,
@@ -24,8 +23,6 @@ const Home = () => {
     })
     .then(() => {
       setInCardQuantityState(inCardQuantityState + 1);
-      console.log("nouvelle quantité ajoutée: " + props.inCardQuantity);
-      console.log("success");
       props.inCardQuantity = props.inCardQuantity + 1;
       fetchCartProducts();
     })
@@ -35,7 +32,6 @@ const Home = () => {
   };
   
   const removeFromCart= (props: Product) =>{
-    console.log("inCardQuantity" + props.inCardQuantity);
     axios.post('http://localhost:5000/api/productsUpdateCard/', {
       _id: props._id,
       name: props.name,
@@ -50,8 +46,6 @@ const Home = () => {
       if (props.inCardQuantity > 0){
         setInCardQuantityState(inCardQuantityState - 1); 
       }
-      console.log("nouvelle quantité ajoutée: " + props.inCardQuantity);
-      console.log("success");
       props.inCardQuantity = props.inCardQuantity - 1;
       fetchCartProducts();
     })
@@ -87,7 +81,7 @@ const Home = () => {
   return (
     <div>
       <h1>Home</h1>
-      <div id="body">
+      <div id="container">
         <div id="productGrid">
           <Grid
             products={products}

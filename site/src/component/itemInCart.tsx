@@ -1,5 +1,6 @@
 import React from "react";
 import { Product } from "../type/product"
+import '../assets/styles/cart.css'
 
 
 

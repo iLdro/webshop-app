@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Product } from "../type/product";
 import ItemInCart from '../component/itemInCart.tsx';
 import '../assets/styles/shop_cart.css';
@@ -10,8 +10,10 @@ interface CartProps {
 }
 
 const Cart = ({ products, removeFromCart }: CartProps) => {
-
+    
     const [cartArray, setCartArray] = useState<Product[]>([]);
+    const [total, setTotal] = useState<number>(0);
+    const [cartQuantity, setCartQuantity] = useState<number>(0);
 
     useEffect(() => {
         const fetchCartProducts = async () => {
@@ -35,21 +37,42 @@ const Cart = ({ products, removeFromCart }: CartProps) => {
         fetchCartProducts();
     }, [products]);
 
+
+    useEffect(() => {
+        let total = 0;
+        cartArray.forEach((product: Product) => {
+            total += product.price * product.inCardQuantity;
+        });
+        setTotal(total);
+    }, [cartArray]);
+
+    
+
+    useEffect(() => {
+        let cartQuantity = 0;
+        cartArray.forEach((product: Product) => {
+            cartQuantity += product.inCardQuantity;
+        });
+        setCartQuantity(cartQuantity);
+    }, [cartArray]);
+
     return (
         <div id="Cart">
             <div id="CartHeader">Cart</div>
             <div id="itemList">
                 {cartArray.map((product: Product) => (
+                    <div id="itemInCart">
                     <ItemInCart
                         key={product._id}
                         product={product}
                         removeFromCart={removeFromCart}
                     />
+                    </div>
                 ))}
             </div>
             <div id="CartFoot">
-                Total : €
-                nombre de produit :
+                <div>Total : {total} €</div>
+                <div>nombre de produit : {cartQuantity}</div>
             </div>
         </div> 
     );   

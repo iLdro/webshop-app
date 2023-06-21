@@ -1,7 +1,6 @@
-#body{
-    background-color: #f5f5f5;
-    padding-top: 70px;
-    padding-bottom: 70px;
+#container {
     display:flex;
     flex-direction: row;
+    justify-content: space-around;        
 }
+

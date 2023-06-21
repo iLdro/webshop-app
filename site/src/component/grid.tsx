@@ -1,8 +1,6 @@
-import React from 'react';
 import { Product } from '../type/product.ts';
 import ProductCard from '../component/product_card.tsx';
 import '../assets/styles/grid.css';
-import axios from 'axios';
 
 interface GridProps {
   products: Product[] | string;
@@ -10,9 +8,6 @@ interface GridProps {
 }
 
 const Grid = ({ products, addToCart }: GridProps) => {
-  console.log(typeof products);
-  console.log("blabla" + products);
-
   let productsArray: Product[] = [];
 
   if (typeof products === 'string') {
@@ -29,7 +24,6 @@ const Grid = ({ products, addToCart }: GridProps) => {
     <>
       <div id="mainGrid">
         {productsArray.map((product: Product) => (
-          console.log("in card quantity", product.inCardQuantity),
           <ProductCard
             key={product._id}
             product={product}

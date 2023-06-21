@@ -1,7 +1,6 @@
 import React from "react";
 import { Product } from "../type/product.ts";
 import '../assets/styles/product_card.css'
-import axios from 'axios';
 
 interface ProductProps {
     product: Product;

@@ -1,0 +1,10 @@
+#ProductInCart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    text-align: left;
+    border : solid gray 1px;
+    margin: 5px;
+    padding: 5px;
+}
