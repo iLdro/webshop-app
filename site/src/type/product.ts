@@ -6,5 +6,6 @@ export interface Product {
     image: string;
     quantity: number;
     category: string;
-    inCardQuantity: number;    
+    inCardQuantity: number;   
+    oldQuantity: number; 
 }

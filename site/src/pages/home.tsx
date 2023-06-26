@@ -30,6 +30,7 @@ const Home = () => {
         quantity: product.quantity,
         category: product.category,
         inCardQuantity: product.inCardQuantity + quantity,
+        oldQuantity: product.oldQuantity
       })
       .then(() => {
         console.log('Product added');

@@ -29,6 +29,10 @@ const produitSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    oldQuantity : {
+        type: Number,
+        required: true
+    }
 });
 
 const Product = mongoose.model('Product', produitSchema);

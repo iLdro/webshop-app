@@ -51,18 +51,40 @@ const SendProductInCart = (req, res, next) => {
 };
 
 const updateInCard = (req, res, next) => {
-    console.log('inCardQuantity', req.body)
-    Product.findByIdAndUpdate(req.body._id, { inCardQuantity: req.body.inCardQuantity })
-        .then(product => {
+    console.log('inCardQuantity', req.body);
+    if (req.body.quantity >= 0 && req.body.inCardQuantity <= req.body.oldQuantity) {
+        Product.findByIdAndUpdate(req.body._id, { inCardQuantity: req.body.inCardQuantity })
+            .then(product => {
+                console.log('done:', product);
+                res.locals.product = product;
+                next();
+            })
+            .catch(err => {
+                console.error('Error updating product:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            });
+    } else {
+        console.log('Invalid inCardQuantity');
+        res.status(400).json({ error: 'Invalid inCardQuantity' });
+    }
+};
+
+const updateQuantity = (req, res, next) => { 
+    Product.findByIdAndUpdate(req.body._id, { quantity: req.body.oldQuantity - req.body.inCardQuantity})
+    .then(product => {
+            console.log("new_quantity",req.body.oldQuantity - req.body.inCardQuantity)  
             console.log('Updated product:', product);
             res.locals.product = product;
             next();
         })
         .catch(err => {
             console.error('Error updating product:', err);
-            res.status(500).json({ error: 'Internal Server Error' }); 
+            res.status(500).json({ error: 'Internal Server Error' });
         });
+
 };
+
+
 
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
@@ -78,7 +100,7 @@ app.get('/api/productsInCard', SendProductInCart, (req, res) => {
     res.json(products);
 });
 
-app.post('/api/productsUpdateCard/', updateInCard, (req, res) => {
+app.post('/api/productsUpdateCard/', updateInCard,updateQuantity, (req, res) => {
     const products = res.locals.products;
     res.json(products);
     app.put('/api/sendUpdate/', SendProductInCart, (req, res) => {
@@ -96,7 +118,8 @@ app.post('/api/createProduct', (req, res) => {
         inCardQuantity: req.body.inCardQuantity,
         description: req.body.description,
         image: req.body.image,
-        category: req.body.category
+        category: req.body.category,
+        oldQuantity: req.body.quantity
     });
     product.save()
         .then(product => {
