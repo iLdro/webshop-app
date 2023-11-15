@@ -1,0 +1,17 @@
+version: '3'
+services:
+  webshop-front:
+    build:
+      context: ./site
+      dockerfile: Dockerfile
+    ports:
+      - "8080:3000"
+    depends_on:
+      - webshop-back
+      
+  webshop-back:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
