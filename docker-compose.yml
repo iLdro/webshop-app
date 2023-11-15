@@ -1,17 +1,34 @@
 version: '3'
 services:
   webshop-front:
+    image: webshop-front-image
     build:
       context: ./site
       dockerfile: Dockerfile
     ports:
       - "8080:3000"
-    depends_on:
-      - webshop-back
-      
+
   webshop-back:
     build:
       context: ./api
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - webshop-app_mongodb-data:/data/db
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=flowerDB
+
+volumes:
+  webshop-app_mongodb-data:

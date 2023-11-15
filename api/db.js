@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-const uri = "mongodb+srv://public-:q0InidYrWprMzFHC@cluster0.48egrz2.mongodb.net/webshoop-app?retryWrites=true&w=majority"
+const uri =  "mongodb://admin:admin@mongodb:27017/flowerDB?authSource=admin";
+
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log(err));
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
