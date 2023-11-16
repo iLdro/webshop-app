@@ -17,18 +17,12 @@ services:
     depends_on:
       - mongodb
 
-  mongodb:
-    image: mongo:latest
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
     restart: always
     ports:
-      - "27017:27017"
+      - "3306:3306"
     volumes:
-      - webshop-app_mongodb-data:/data/db
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-      - MONGO_INITDB_DATABASE=flowerDB
-
-volumes:
-  webshop-app_mongodb-data:
+      - webshop-app_mysql-data:/var/lib/mysql
