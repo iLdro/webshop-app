@@ -1,7 +1,7 @@
 version: '3'
 services:
   sql:
-    image: sql
+    image: kcarre/sql:latest
     container_name: sql
     ports:
       - "3306:3306"
@@ -12,12 +12,9 @@ services:
       MYSQL_DATABASE: flowerDB
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-    build:
-      context: ./mysql
-      dockerfile: Dockerfile
 
   flowerexpress:
-    image: flowerexpress
+    image: kcarre/flowerexpress:latest
     container_name: flowerexpress
     ports:
       - "5000:5000"
@@ -25,20 +22,14 @@ services:
       - flowernetwork
     depends_on:
       - sql
-    build:
-      context: ./express
-      dockerfile: Dockerfile
 
   webshop-front:
-    image: webshop-front-image
+    image: kcarre/webshop-front-image:latest
     container_name: webshop-front
     ports:
       - "3000:3000"
     networks:
       - flowernetwork
-    build:
-      context: ./site
-      dockerfile: Dockerfile
 
 networks:
   flowernetwork:
