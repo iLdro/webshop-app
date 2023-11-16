@@ -1,28 +1,45 @@
 version: '3'
 services:
-  webshop-front:
-    image: webshop-front-image
-    build:
-      context: ./site
-      dockerfile: Dockerfile
+  sql:
+    image: sql
+    container_name: sql
     ports:
-      - "8080:3000"
-
-  webshop-back:
-    build:
-      context: ./api
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mongodb
-
-  mysql:
+      - "3306:3306"
+    networks:
+      - flowernetwork
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: flowerDB
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
     build:
       context: ./mysql
       dockerfile: Dockerfile
-    restart: always
+
+  flowerexpress:
+    image: flowerexpress
+    container_name: flowerexpress
     ports:
-      - "3306:3306"
-    volumes:
-      - webshop-app_mysql-data:/var/lib/mysql
+      - "5000:5000"
+    networks:
+      - flowernetwork
+    depends_on:
+      - sql
+    build:
+      context: ./express
+      dockerfile: Dockerfile
+
+  webshop-front:
+    image: webshop-front-image
+    container_name: webshop-front
+    ports:
+      - "3000:3000"
+    networks:
+      - flowernetwork
+    build:
+      context: ./site
+      dockerfile: Dockerfile
+
+networks:
+  flowernetwork:
+    driver: bridge

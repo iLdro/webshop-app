@@ -41,12 +41,19 @@ const connection = mysql.createConnection({
     port: 3306
 });
 
-connection.connect((err) => {
-    if (err) {
-        console.error('Error connecting to mysql server:', err);
-    };
-    console.log('Connected to Mysql!');
-});
+const connectWithRetry = () => {
+    return connection.connect((err) => {
+        if (err) {
+          console.error('Failed to connect to MySQL, retrying in 15 seconds...');
+          setTimeout(connectWithRetry, 15000);
+        } else {
+          console.log('Connected to MySQL!');
+        }
+    });
+};
+
+connectWithRetry();
+
 
 const sendProducts = (req, res, next) => {
     const sqlQuery = 'SELECT * FROM products';
