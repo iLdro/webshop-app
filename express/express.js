@@ -144,22 +144,43 @@ app.post('/api/productsUpdateCard/', updateInCard,updateQuantity, (req, res) => 
 });
 
 app.post('/api/createProduct', (req, res) => {
+    console.log("try to create a new product" + req.body)
+    const { name, price, description, image, quantity, category, inCardQuantity, oldQuantity } = req.body;
+    console.log("name" + name + "price" + price + "description" + description + "image" + image + "quantity" + quantity + "category" + category + "inCardQuantity" + inCardQuantity + "oldQuantity" + oldQuantity)
+    // Check if required fields are present
+    if (!name || !price || !description || !image || !quantity || !category || inCardQuantity === undefined) {
+        return res.status(400).json({ error: 'Please fill in all required fields.' });
+    }
+
     console.log('Creating product:', req.body);
-    // const sqlQuery = 'INSERT INTO products (name, price, quantity, inCardQuantity, description, image, category, oldQuantity) VALUES (' + req.body.name + ', ' + req.body.price + ', ' + req.body.quantity + ', ' + req.body.inCardQuantity + ', ' + req.body.description + ', ' + req.body.image + ', ' + req.body.category + ', ' + req.body.quantity + ')';
-    // connection.query(sqlQuery, (err, results) => {
-    //     if (err) {
-    //         console.error('Erreur lors de l\'exécution de la requête : ' + err.stack);
-    //         return res.status(500).json({ error: 'Erreur de base de données' });
-    //     }
-    //     console.log('product created !:', results);
-    // });
-    // const getproductquery = 'SELECT * FROM products WHERE name = ' + req.body.name;
-    // connection.query(getproductquery, (err, results) => {
-    //     if (err) {
-    //         console.error('Erreur lors de l\'exécution de la requête : ' + err.stack);
-    //         return res.status(500).json({ error: 'Erreur de base de données' });
-    //     }
-    //     console.log('Created product:', results);
-    //     res.locals.product = results;
-    // });
+
+    // Sanitize and escape user input to prevent SQL injection (you may need to use a library for this)
+    const sanitizedName = connection.escape(name);
+    const sanitizedDescription = connection.escape(description);
+    const sanitizedImage = connection.escape(image);
+    const sanitizedCategory = connection.escape(category);
+
+    const sqlQuery = `INSERT INTO products (name, price, description, image, quantity, category, inCardQuantity, oldQuantity) VALUES (${sanitizedName}, ${price}, ${sanitizedDescription}, ${sanitizedImage}, ${quantity}, ${sanitizedCategory}, ${inCardQuantity}, ${quantity})`;
+
+    connection.query(sqlQuery, (err, results) => {
+        if (err) {
+            console.error('Error executing query: ' + err.stack);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        console.log('Product created:', results);
+    });
+
+    const getProductQuery = `SELECT * FROM products WHERE name = ${sanitizedName}`;
+
+    connection.query(getProductQuery, (err, results) => {
+        if (err) {
+            console.error('Error executing query: ' + err.stack);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        console.log('Created product:', results);
+        res.json(results);
+    });
 });
+
