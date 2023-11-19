@@ -63,7 +63,7 @@ const sendProducts = (req, res, next) => {
           return res.status(500).json({ error: 'Erreur de base de données' });
         }
         console.log('Retrieved all products:', results);
-        res.locals.products = results;
+        res.json(results);
         next();
     });
 };
@@ -98,7 +98,7 @@ const updateQuantity = (req, res, next) => {
           return res.status(500).json({ error: 'Erreur de base de données' });
         }
         console.log('Updated product:', results);
-        res.locals.product = results;
+        res.json(results);
     });
 };
 
@@ -120,7 +120,7 @@ const updateInCard = (req, res, next) => {
                 return res.status(500).json({ error: 'Erreur de base de données' });
             }
             console.log('Updated product:', results);
-            res.locals.product = results;
+            res.json(results);
         });
     } else {
         console.log('Invalid inCardQuantity');
